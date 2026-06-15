@@ -1,0 +1,76 @@
+/* Animated Hamburger to Cross Menu CSS */
+
+body {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f1f5f9;
+}
+
+/* 
+  The Hamburger Container 
+  We use font-size to scale the entire icon effortlessly using 'em' units below.
+*/
+.hamburger-menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 3rem;
+  height: 2.2rem;
+  cursor: pointer;
+  position: relative;
+}
+
+/* Hide the native checkbox, but keep it accessible/focusable if needed */
+.hamburger-checkbox {
+  display: none;
+}
+
+/* The three bars */
+.hamburger-line {
+  display: block;
+  width: 100%;
+  height: 0.4rem;
+  background-color: #334155;
+  border-radius: 0.2rem;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
+              opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: left center;
+}
+
+/* 
+  State Management:
+  When the hidden checkbox is :checked, we animate the sibling spans.
+*/
+
+/* 
+  Top Line: 
+  Rotate 45deg down.
+*/
+.hamburger-checkbox:checked ~ .top {
+  transform: rotate(45deg) translate(0.15rem, -0.2rem);
+}
+
+/* 
+  Middle Line: 
+  Fade out and shrink.
+*/
+.hamburger-checkbox:checked ~ .middle {
+  opacity: 0;
+  transform: translateX(-1rem);
+}
+
+/* 
+  Bottom Line: 
+  Rotate 45deg up.
+*/
+.hamburger-checkbox:checked ~ .bottom {
+  transform: rotate(-45deg) translate(0.15rem, 0.2rem);
+}
+
+/* Hover effect on the container to show it's clickable */
+.hamburger-menu:hover .hamburger-line {
+  background-color: #3b82f6;
+}
