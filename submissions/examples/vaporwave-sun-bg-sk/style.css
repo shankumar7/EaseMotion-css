@@ -1,0 +1,128 @@
+/* Retro Vaporwave Sun Background CSS */
+
+:root {
+  --vw-bg-top: #0a0429;
+  --vw-bg-bottom: #2b0b3f;
+  --vw-sun-top: #ffea00;
+  --vw-sun-bottom: #ff0055;
+  --vw-grid-line: #f125e4;
+  --vw-grid-bg: #110022;
+}
+
+body {
+  margin: 0;
+  font-family: 'Courier New', Courier, monospace;
+  background: linear-gradient(to bottom, var(--vw-bg-top) 0%, var(--vw-bg-bottom) 50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+/* Main Container */
+.vaporwave-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  z-index: -1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 
+  The Sliced Sun.
+  We use a standard linear gradient for the colors, 
+  and a repeating gradient mask to cut the horizontal transparent slices.
+*/
+.vaporwave-sun {
+  position: absolute;
+  top: 15vh;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: linear-gradient(to bottom, var(--vw-sun-top) 0%, var(--vw-sun-bottom) 100%);
+  
+  /* Create the slicing effect */
+  -webkit-mask-image: repeating-linear-gradient(
+    to bottom,
+    black 0%,
+    black 10%,
+    transparent 10%,
+    transparent 12%
+  );
+  mask-image: repeating-linear-gradient(
+    to bottom,
+    black 0%,
+    black 10%,
+    transparent 10%,
+    transparent 12%
+  );
+  
+  /* Add an outer glow */
+  filter: drop-shadow(0 0 40px rgba(255, 0, 85, 0.8));
+}
+
+/* 
+  The 3D Moving Perspective Grid.
+  We draw a massive grid flat, then use 3D rotation to tilt it towards the horizon line.
+*/
+.vaporwave-grid {
+  position: absolute;
+  bottom: 0;
+  left: -50%; /* Extend past screen width to prevent edges showing during tilt */
+  width: 200%;
+  height: 60vh;
+  background-color: var(--vw-grid-bg);
+  
+  /* Draw the grid lines */
+  background-image: 
+    linear-gradient(var(--vw-grid-line) 2px, transparent 2px),
+    linear-gradient(90deg, var(--vw-grid-line) 2px, transparent 2px);
+  background-size: 50px 50px;
+  
+  /* Tilt the plane in 3D */
+  transform-origin: top center;
+  transform: perspective(600px) rotateX(60deg);
+  
+  /* Add a neon glow and fade the horizon line into the sky */
+  box-shadow: 0 -20px 40px var(--vw-grid-line), inset 0 60px 40px var(--vw-bg-bottom);
+  
+  /* Animate the grid moving towards the camera */
+  animation: grid-move 2s linear infinite;
+}
+
+/* 
+  Animate the background-position vertically to simulate forward movement.
+  Moving exactly one 'background-size' block (50px) makes the loop seamless.
+*/
+@keyframes grid-move {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 0 50px;
+  }
+}
+
+/* Foreground content container */
+.content-wrapper {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  color: white;
+  text-shadow: 0 0 10px #ff0055, 0 0 20px #f125e4;
+}
+
+.content-wrapper h1 {
+  font-size: 4rem;
+  letter-spacing: 5px;
+  margin: 0;
+  font-style: italic;
+  font-weight: 900;
+}
